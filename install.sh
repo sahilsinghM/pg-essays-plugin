@@ -1,17 +1,20 @@
 #!/usr/bin/env bash
 #
-# Install or update the pg-essays Claude Code skill.
+# Install or update the pg-essays Claude Code plugin (two modes).
 #
 #   curl -fsSL https://raw.githubusercontent.com/sahilsinghM/pg-essays-plugin/main/install.sh | bash
 #
-# Installs the skill into ~/.claude/skills/pg-essays (works in every Claude Code
-# session). Re-run any time to update the persona + index. Paul Graham's essays
-# are fetched to your machine on first install (no API key); they are copyrighted
-# and never redistributed.
+# Installs two skills into ~/.claude/skills:
+#   - pg-essays        quick grounded lookup, answers in PG's voice
+#   - pg-office-hours  structured office-hours interrogation (reuses the same corpus)
+# Both work in every Claude Code session. Re-run any time to update the personas +
+# index. Paul Graham's essays are fetched to your machine on first install (no API
+# key); they are copyrighted and never redistributed.
 set -euo pipefail
 
 RAW="https://raw.githubusercontent.com/sahilsinghM/pg-essays-plugin/main"
 DEST="${HOME}/.claude/skills/pg-essays"
+OH_DEST="${HOME}/.claude/skills/pg-office-hours"
 
 echo "==> Installing/updating pg-essays into $DEST"
 mkdir -p "$DEST/essays"
@@ -19,6 +22,12 @@ mkdir -p "$DEST/essays"
 # Always refresh the persona + index (cheap; this is the "update").
 curl -fsSL "$RAW/skills/pg-essays/SKILL.md" -o "$DEST/SKILL.md"
 curl -fsSL "$RAW/skills/pg-essays/INDEX.md" -o "$DEST/INDEX.md"
+
+# Office-hours mode is a companion skill: just its persona, no corpus of its own —
+# it reuses the pg-essays essays + INDEX built below.
+echo "==> Installing/updating pg-office-hours into $OH_DEST"
+mkdir -p "$OH_DEST"
+curl -fsSL "$RAW/skills/pg-office-hours/SKILL.md" -o "$OH_DEST/SKILL.md"
 
 # Build the essay corpus once (the copyrighted text — fetched locally, not shipped).
 if [ -z "$(ls -A "$DEST/essays" 2>/dev/null)" ]; then
@@ -51,5 +60,6 @@ else
   echo "    To re-fetch the essays, delete $DEST/essays and re-run this command."
 fi
 
-echo "✅ pg-essays ready. In Claude Code, ask Paul Graham anything — e.g.:"
-echo "     /pg-essays how do I get startup ideas?"
+echo "✅ pg-essays + pg-office-hours ready. In Claude Code, two ways to talk to PG:"
+echo "     /pg-essays how do I get startup ideas?          # quick grounded answer"
+echo "     /pg-office-hours should I drop out to do a startup?   # office-hours grilling"
