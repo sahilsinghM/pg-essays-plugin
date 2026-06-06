@@ -4,25 +4,27 @@ A Claude Code skill that answers **as Paul Graham**, in his voice, grounded in h
 essays and citing them. Runs inside Claude Code on your own plan — no separate API
 key, no per-token cost.
 
-## Install
+## Install (one line)
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/sahilsinghM/pg-essays-plugin/main/install.sh | bash
+```
+
+This installs the skill into `~/.claude/skills/pg-essays/` (available in every
+Claude Code session) and fetches the essays to your machine on first run.
+**Re-run the same command any time to update.** Needs Python 3 + network; **no API
+key**. Takes a few minutes the first time (fetching ~225 essays), instant after.
+
+The essays are copyrighted, so they're **not** redistributed — the installer
+fetches your own local copy from paulgraham.com.
+
+### Alternative: install as a Claude Code plugin
 
 ```
 /plugin marketplace add github:sahilsinghM/pg-essays-plugin
 /plugin install pg-essays
+/pg-essays-build          # one-time corpus build
 ```
-
-## One-time build (required)
-
-The plugin ships the persona and the essay **index**, but **not** Paul Graham's
-essay text — that's copyrighted, so you fetch your own local copy:
-
-```
-/pg-essays-build
-```
-(or manually: `pip install -r ${CLAUDE_PLUGIN_ROOT}/build/requirements.txt && python ${CLAUDE_PLUGIN_ROOT}/build/crawl.py`)
-
-This fetches ~225 essays from paulgraham.com into the plugin's local `essays/`
-folder. Takes a few minutes; needs Python + network; **no API key**.
 
 ## Use
 

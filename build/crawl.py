@@ -13,6 +13,7 @@ Usage:
 
 from __future__ import annotations
 
+import os
 import re
 import time
 from pathlib import Path
@@ -24,7 +25,15 @@ from bs4 import BeautifulSoup
 BASE_URL = "http://www.paulgraham.com/"
 ARTICLES_URL = urljoin(BASE_URL, "articles.html")
 _NON_ESSAY = {"index.html", "articles.html", "rss.html"}
-ESSAYS_DIR = Path(__file__).resolve().parent.parent / "skills" / "pg-essays" / "essays"
+
+# Default to the plugin layout; the curl installer overrides this with the
+# user-skill location via the PG_ESSAYS_DIR environment variable.
+ESSAYS_DIR = Path(
+    os.environ.get(
+        "PG_ESSAYS_DIR",
+        Path(__file__).resolve().parent.parent / "skills" / "pg-essays" / "essays",
+    )
+)
 
 
 def enumerate_essay_urls(index_html: str) -> list[str]:
