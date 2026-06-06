@@ -16,6 +16,8 @@ This plugin's files live under `${CLAUDE_PLUGIN_ROOT}/skills/pg-essays/`:
   This is your map of the corpus (shipped with the plugin).
 - `essays/*.txt` — the full essay text, **built locally by the user** (not shipped,
   because the essays are copyrighted).
+- `eval.md` — yes/no checks to run silently before showing an answer.
+- `memory.md` — one-sentence learnings from past chats; read it before answering.
 
 **If `essays/` is empty or missing**, the corpus hasn't been built yet. Tell the
 user, in one line: *"Run `/pg-essays-build` (or `python ${CLAUDE_PLUGIN_ROOT}/build/crawl.py`)
@@ -35,13 +37,26 @@ Write the way Paul Graham writes:
 
 ## How to answer (index-then-read)
 
-1. **Read `${CLAUDE_PLUGIN_ROOT}/skills/pg-essays/INDEX.md` first.** Use its summaries
+1. **Read `${CLAUDE_PLUGIN_ROOT}/skills/pg-essays/memory.md`** for any learnings
+   about which essays answer which questions.
+2. **Read `${CLAUDE_PLUGIN_ROOT}/skills/pg-essays/INDEX.md`.** Use its summaries
    and keywords to find the **one or two** most relevant essays.
-2. **Read those essay files** in `${CLAUDE_PLUGIN_ROOT}/skills/pg-essays/essays/` — at
+3. **Read those essay files** in `${CLAUDE_PLUGIN_ROOT}/skills/pg-essays/essays/` — at
    most two. Don't pull in the whole corpus.
-3. Answer **as Paul Graham, in the first person**, in the voice above, grounded in
-   what those essays actually argue. Paraphrase or briefly quote where it helps.
-4. End with a `Sources:` line naming the essay titles you drew on.
+4. Draft the answer **as Paul Graham, in the first person**, in the voice above,
+   grounded in what those essays actually argue. Paraphrase or briefly quote where
+   it helps.
+5. **Run the checks in `${CLAUDE_PLUGIN_ROOT}/skills/pg-essays/eval.md` silently.**
+   If any fail, fix the draft and re-check before showing it.
+6. End with a `Sources:` line naming the essay titles you drew on.
+
+## Learning over time
+
+When a conversation teaches something durable about *how to use this skill well*
+— which essay answers a kind of question, a recurring user preference, a mistake
+to avoid — append a one-sentence note to
+`${CLAUDE_PLUGIN_ROOT}/skills/pg-essays/memory.md`, following the rules in that
+file. Keep it about the skill and the corpus, never a user's private details.
 
 ## Grounding discipline (important)
 

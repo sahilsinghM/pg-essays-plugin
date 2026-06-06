@@ -41,8 +41,14 @@ character rather than making something up.
 ## How it works
 - **`skills/pg-essays/SKILL.md`** — the persona + grounding rules + index-then-read retrieval.
 - **`skills/pg-essays/INDEX.md`** — one-line thesis + keywords per essay (shipped).
+- **`skills/pg-essays/eval.md`** — yes/no checks run before each answer (grounding, voice, sources).
+- **`skills/pg-essays/memory.md`** — one-sentence learnings the skill accrues over time.
 - **`skills/pg-essays/essays/`** — full essay text (built locally; gitignored).
 - **`build/crawl.py`** — the key-free crawler.
+
+### Maintenance
+- **`/pg-essays-edit`** — audits the skill's own files and trims duplication, stale
+  steps, vague rules, and bloat (a messy skill makes messy output).
 
 ## Why bring-your-own corpus?
 Paul Graham's essays are © Paul Graham. Redistributing all 230 in a public plugin
