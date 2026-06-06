@@ -1,0 +1,13 @@
+{
+  "name": "pg-essays-marketplace",
+  "owner": {
+    "name": "Sahil Singh"
+  },
+  "plugins": [
+    {
+      "name": "pg-essays",
+      "source": "./",
+      "description": "Chat with Paul Graham, grounded in his essays (bring-your-own corpus — run the one-time build)."
+    }
+  ]
+}

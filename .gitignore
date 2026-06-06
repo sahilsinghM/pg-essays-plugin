@@ -1,0 +1,6 @@
+# Paul Graham's essays are copyrighted — never committed/redistributed.
+# Each user builds their own local copy via the build step.
+skills/pg-essays/essays/
+
+__pycache__/
+*.pyc

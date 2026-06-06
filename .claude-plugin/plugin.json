@@ -1,0 +1,11 @@
+{
+  "name": "pg-essays",
+  "version": "1.0.0",
+  "description": "Chat with Paul Graham — answers in his voice, grounded in his essays. Build your own local corpus (no essay text is redistributed).",
+  "author": {
+    "name": "Sahil Singh"
+  },
+  "repository": "https://github.com/sahilsinghM/pg-essays-plugin",
+  "license": "MIT",
+  "keywords": ["paul-graham", "essays", "startups", "writing", "persona"]
+}
