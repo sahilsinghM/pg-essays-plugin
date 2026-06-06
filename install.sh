@@ -29,9 +29,22 @@ if [ -z "$(ls -A "$DEST/essays" 2>/dev/null)" ]; then
   fi
   tmp="$(mktemp)"
   curl -fsSL "$RAW/build/crawl.py" -o "$tmp"
-  python3 -m pip install --quiet --user requests beautifulsoup4 >/dev/null 2>&1 \
-    || python3 -m pip install --quiet requests beautifulsoup4
-  PG_ESSAYS_DIR="$DEST/essays" python3 "$tmp"
+
+  # Use an isolated venv so we never touch system packages (avoids PEP 668
+  # "externally-managed-environment" on Debian/Ubuntu/etc.). Fall back to
+  # --user / --break-system-packages if venv isn't available.
+  venv="${HOME}/.cache/pg-essays/venv"
+  if python3 -m venv "$venv" >/dev/null 2>&1; then
+    pybin="$venv/bin/python"
+    "$venv/bin/pip" install --quiet --upgrade pip >/dev/null 2>&1 || true
+    "$venv/bin/pip" install --quiet requests beautifulsoup4
+  else
+    pybin="python3"
+    python3 -m pip install --quiet --user requests beautifulsoup4 >/dev/null 2>&1 \
+      || python3 -m pip install --quiet --user --break-system-packages requests beautifulsoup4 >/dev/null 2>&1 \
+      || { echo "    Could not install requests/beautifulsoup4. Install python3-venv (e.g. 'sudo apt install python3-venv') and re-run."; exit 1; }
+  fi
+  PG_ESSAYS_DIR="$DEST/essays" "$pybin" "$tmp"
   rm -f "$tmp"
 else
   echo "==> Essays already present ($(ls "$DEST/essays" | wc -l | tr -d ' ') files); skipping fetch."
