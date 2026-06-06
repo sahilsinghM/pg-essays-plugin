@@ -7,7 +7,7 @@
     {
       "name": "pg-essays",
       "source": "./",
-      "description": "Chat with Paul Graham, grounded in his essays (bring-your-own corpus — run the one-time build)."
+      "description": "Chat with Paul Graham, grounded in his essays — quick lookup (pg-essays) + office-hours grilling (pg-office-hours). Bring-your-own corpus (run the one-time build)."
     }
   ]
 }

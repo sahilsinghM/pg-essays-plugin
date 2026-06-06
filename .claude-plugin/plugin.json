@@ -1,7 +1,7 @@
 {
   "name": "pg-essays",
-  "version": "1.0.0",
-  "description": "Chat with Paul Graham — answers in his voice, grounded in his essays. Build your own local corpus (no essay text is redistributed).",
+  "version": "1.1.0",
+  "description": "Chat with Paul Graham, grounded in his essays — two modes: pg-essays (quick grounded lookup in his voice) and pg-office-hours (structured office-hours interrogation). Build your own local corpus (no essay text is redistributed).",
   "author": {
     "name": "Sahil Singh"
   },
